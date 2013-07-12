@@ -27,8 +27,8 @@ class PyEdit:
         self.filemenu = gtk.Menu()
         self.file_menu = gtk.MenuItem("File")
         
-        self.about_menu = gtk.MenuItem("About")
-        self.about_menu.connect("activate", self.about_dialog)
+        self.helpmenu = gtk.Menu()
+        self.help_menu = gtk.MenuItem("Help")
         
         self.settingsmenu = gtk.Menu()
         self.settings_menu = gtk.MenuItem("Settings")
@@ -41,6 +41,9 @@ class PyEdit:
         
         self.syntaxmenu = gtk.Menu()
         self.syntax_menu = gtk.MenuItem("Syntax")
+        
+        self.help_menu_about = gtk.MenuItem("About")
+        self.help_menu_about.connect("activate", self.about_dialog)
         
         self.file_menu_open = gtk.MenuItem("Open")
         self.file_menu_open.connect("activate", self.open)
@@ -207,19 +210,21 @@ class PyEdit:
         
         self.uploadmenu.append(self.upload_menu_cookiebin)
         
-        
+        self.helpmenu.append(self.help_menu_about)
+
         self.file_menu.set_submenu(self.filemenu)
         self.edit_menu.set_submenu(self.editmenu)
         self.upload_menu.set_submenu(self.uploadmenu)
         self.settings_menu.set_submenu(self.settingsmenu)
         self.syntax_menu.set_submenu(self.syntaxmenu)
+        self.help_menu.set_submenu(self.helpmenu)
            
         self.menubar.append(self.file_menu)
         self.menubar.append(self.edit_menu)
         self.menubar.append(self.settings_menu)
         self.menubar.append(self.upload_menu)
         self.menubar.append(self.syntax_menu)
-        self.menubar.append(self.about_menu)
+        self.menubar.append(self.help_menu)
         
         self.vbox = gtk.VBox(False, 2)   
         
