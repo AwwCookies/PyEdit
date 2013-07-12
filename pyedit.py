@@ -6,7 +6,7 @@ import pygtk, gtk, pango, urllib2, urllib
 import gtkcodebuffer
 class PyEdit:
     def __init__(self):
-        self.VERSION = "0.0.1"
+        self.VERSION = "0.0.2"
         self.PROGNAME = "PyEdit"
         # syntax hilighting
         self.lang = None
