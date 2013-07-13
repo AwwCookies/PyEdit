@@ -10,6 +10,7 @@ class PyEdit:
         self.CONFIG = {
             "font": "Ubuntu Mono 12",
         }
+        
     def __init__(self):
         self.get_config()
         self.VERSION = "0.0.2"
@@ -18,9 +19,9 @@ class PyEdit:
         self.lang = None
         self.buff = None
         self.FILEPATH = ""
-        self.FILEEXT = ""
-        self.syntex = None
-        self.FONT = self.PFONT = pango.FontDescription(self.CONFIG["font"])
+        # self.FILEEXT = ""
+        self.syntax = None
+        self.FONT = pango.FontDescription(self.CONFIG["font"])
         self.SEP = gtk.SeparatorMenuItem()
         self.clipboard = gtk.Clipboard()
         self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
@@ -271,7 +272,7 @@ class PyEdit:
         self.ad.set_website("http://github.com/AwwCookies/PyEdit")
         self.ad.set_comments(
             "Text Editor made with python and GTK\n\n"
-            "Syntex highlighting made possiable with Code Buffer\n"
+            "Syntax highlighting made possible with Code Buffer\n"
             "http://code.google.com/p/pygtkcodebuffer/")
         self.ad.set_default_response(gtk.RESPONSE_OK)
         self.response = self.ad.run()
@@ -283,15 +284,15 @@ class PyEdit:
             self.textview.get_buffer().get_end_iter())
         if widget != None:
             if widget.get_label() != "none":
-                self.syntex = gtkcodebuffer.SyntaxLoader(widget.get_label())
-                self.buff = gtkcodebuffer.CodeBuffer(lang=self.syntex, font=self.FONT)
+                self.syntax = gtkcodebuffer.SyntaxLoader(widget.get_label())
+                self.buff = gtkcodebuffer.CodeBuffer(lang=self.syntax, font=self.FONT)
             else:
                 self.buff = None
             self.textview.set_buffer(self.buff)
             # Restore Buffer text
             self.textview.get_buffer().set_text(self.old_buffer)
         else:
-            self.buff = gtkcodebuffer.CodeBuffer(lang=self.syntex, font=self.FONT)
+            self.buff = gtkcodebuffer.CodeBuffer(lang=self.syntax, font=self.FONT)
             self.textview.set_buffer(self.buff)
             self.textview.get_buffer().set_text(self.old_buffer)
             
