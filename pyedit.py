@@ -1,4 +1,4 @@
-#################################### 
+####################################
 # PyEdit: A python text editor     #
 # Made by: Emma Jones (AwwCookies) #
 ####################################
@@ -17,59 +17,59 @@ class PyEdit:
         self.SEP = gtk.SeparatorMenuItem()
         self.clipboard = gtk.Clipboard()
         self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
-        self.window.set_title("PyEdit") 
+        self.window.set_title("PyEdit")
         self.window.set_size_request(800, 600)
         # self.window.set_icon_from_file(gtk.STOCK_FILE)
         self.window.connect("delete_event", self.delete_event)
         self.window.connect("destroy", self.destory)
-        
+
         self.menubar = gtk.MenuBar()
         self.filemenu = gtk.Menu()
         self.file_menu = gtk.MenuItem("File")
-        
+
         self.helpmenu = gtk.Menu()
         self.help_menu = gtk.MenuItem("Help")
-        
+
         self.settingsmenu = gtk.Menu()
         self.settings_menu = gtk.MenuItem("Settings")
-        
+
         self.editmenu = gtk.Menu()
         self.edit_menu = gtk.MenuItem("Edit")
-        
+
         self.uploadmenu = gtk.Menu()
         self.upload_menu = gtk.MenuItem("Upload")
-        
+
         self.syntaxmenu = gtk.Menu()
         self.syntax_menu = gtk.MenuItem("Syntax")
         
         self.help_menu_about = gtk.MenuItem("About")
         self.help_menu_about.connect("activate", self.about_dialog)
-        
+
         self.file_menu_open = gtk.MenuItem("Open")
         self.file_menu_open.connect("activate", self.open)
-        
+
         self.file_menu_save_as = gtk.MenuItem("Save As")
         self.file_menu_save_as.connect("activate", self.save_as)
-        
+
         self.file_menu_save = gtk.MenuItem("Save")
         self.file_menu_save.connect("activate", self.save)
-        
+
         self.file_menu_exit = gtk.MenuItem("Exit")
         self.file_menu_exit.connect("activate", gtk.main_quit)
-        
+
         self.settings_menu_font = gtk.MenuItem("Font")
         self.settings_menu_font.connect("activate", self.font_dialog)
-        
+
         self.edit_menu_cut = gtk.MenuItem("Cut")
         self.edit_menu_cut.connect("activate", self.cut)
         self.edit_menu_copy = gtk.MenuItem("Copy")
         self.edit_menu_copy.connect("activate", self.copy)
         self.edit_menu_paste = gtk.MenuItem("Paste")
         self.edit_menu_paste.connect("activate", self.paste)
-        
+
         self.upload_menu_cookiebin = gtk.MenuItem("CookieBin")
         self.upload_menu_cookiebin.connect("activate", self.cookiebin)
-        
+
         # Create all the syntax menu items
         self.syntax_menu_ada = gtk.MenuItem("ada")
         self.syntax_menu_c = gtk.MenuItem("c")
@@ -111,7 +111,7 @@ class PyEdit:
         self.syntax_menu_verilog = gtk.MenuItem("verilog")
         self.syntax_menu_vhdl = gtk.MenuItem("vhdl")
         self.syntax_menu_xml = gtk.MenuItem("xml")
-        
+
         # Connect all the syntax menu items to the change_syntax function
         self.syntax_menu_ada.connect("activate", self.change_syntax)
         self.syntax_menu_c.connect("activate", self.change_syntax)
@@ -153,7 +153,7 @@ class PyEdit:
         self.syntax_menu_verilog.connect("activate", self.change_syntax)
         self.syntax_menu_vhdl.connect("activate", self.change_syntax)
         self.syntax_menu_xml.connect("activate", self.change_syntax)
-        
+
         # Appended all the syntax_menus to the main syntaxmenu
         self.syntaxmenu.append(self.syntax_menu_ada)
         self.syntaxmenu.append(self.syntax_menu_c)
@@ -195,21 +195,21 @@ class PyEdit:
         self.syntaxmenu.append(self.syntax_menu_verilog)
         self.syntaxmenu.append(self.syntax_menu_vhdl)
         self.syntaxmenu.append(self.syntax_menu_xml)
-        
+
         self.filemenu.append(self.file_menu_open)
         self.filemenu.append(self.file_menu_save)
         self.filemenu.append(self.file_menu_save_as)
         self.filemenu.append(self.SEP)
         self.filemenu.append(self.file_menu_exit)
-        
+
         self.settingsmenu.append(self.settings_menu_font)
-        
+
         self.editmenu.append(self.edit_menu_cut)
         self.editmenu.append(self.edit_menu_copy)
         self.editmenu.append(self.edit_menu_paste)
-        
+
         self.uploadmenu.append(self.upload_menu_cookiebin)
-        
+
         self.helpmenu.append(self.help_menu_about)
 
         self.file_menu.set_submenu(self.filemenu)
