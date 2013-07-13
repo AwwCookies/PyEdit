@@ -31,7 +31,7 @@ import imp
 from xml.sax.handler import ContentHandler
 from xml.sax.saxutils import unescape
 
-__version__ = "1.0RC2"
+__version__ = "1.1RC2"
 __author__  = "Hannes Matuschek <hmatuschek@gmail.com>"
 
 
@@ -508,7 +508,7 @@ class CodeBuffer(gtk.TextBuffer):
     """ This class extends the gtk.TextBuffer to support syntax-highlighting. 
         You can use this class like a normal TextBuffer. """
         
-    def __init__(self, font, table=None, lang=None, styles={}):
+    def __init__(self, table=None, lang=None, styles={}, font = None):
         """ The constructor takes 3 optional arguments. 
         
             table specifies a tag-table associated with the TextBuffer-instance.

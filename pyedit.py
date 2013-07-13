@@ -13,7 +13,7 @@ class PyEdit:
         self.buff = None
         self.FILEPATH = ""
         self.FILEEXT = ""
-        self.syntax = None
+        self.syntex = None
         self.FONT = pango.FontDescription("Ubuntu Mono 12")
         self.SEP = gtk.SeparatorMenuItem()
         self.clipboard = gtk.Clipboard()
