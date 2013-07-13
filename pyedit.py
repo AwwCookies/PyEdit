@@ -13,6 +13,7 @@ class PyEdit:
         self.buff = None
         self.FILEPATH = ""
         self.FILEEXT = ""
+        self.syntax = None
         self.FONT = pango.FontDescription("Ubuntu Mono 12")
         self.SEP = gtk.SeparatorMenuItem()
         self.clipboard = gtk.Clipboard()
@@ -259,20 +260,27 @@ class PyEdit:
         # Save current buffer text
         self.old_buffer = self.textview.get_buffer().get_text(self.textview.get_buffer().get_start_iter(),
             self.textview.get_buffer().get_end_iter())
-        if widget.get_label() != "none":
-            self.syntex = gtkcodebuffer.SyntaxLoader(widget.get_label())
-            self.buff = gtkcodebuffer.CodeBuffer(lang=self.syntex)
+        if widget != None:
+            if widget.get_label() != "none":
+                self.syntex = gtkcodebuffer.SyntaxLoader(widget.get_label())
+                self.buff = gtkcodebuffer.CodeBuffer(lang=self.syntex, font=self.FONT)
+            else:
+                self.buff = None
+            self.textview.set_buffer(self.buff)
+            # Restore Buffer text
+            self.textview.get_buffer().set_text(self.old_buffer)
         else:
-            self.buff = None
-        self.textview.set_buffer(self.buff)
-        # Restore Buffer text
-        self.textview.get_buffer().set_text(self.old_buffer)
+            self.buff = gtkcodebuffer.CodeBuffer(lang=self.syntex, font=self.FONT)
+            self.textview.set_buffer(self.buff)
+            self.textview.get_buffer().set_text(self.old_buffer)
+            
         
     def font_dialog(self, widget, data = None):
         self.dialog = gtk.FontSelectionDialog("Pick a font")
         self.dialog.run()
         self.FONT = self.dialog.get_font_name()
         self.textview.modify_font(pango.FontDescription(self.FONT))
+        self.change_syntax(None)
         self.dialog.destroy()
     
     def open(self, widget, data = None):

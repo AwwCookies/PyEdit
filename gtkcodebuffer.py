@@ -508,7 +508,7 @@ class CodeBuffer(gtk.TextBuffer):
     """ This class extends the gtk.TextBuffer to support syntax-highlighting. 
         You can use this class like a normal TextBuffer. """
         
-    def __init__(self, table=None, lang=None, styles={}):
+    def __init__(self, font, table=None, lang=None, styles={}):
         """ The constructor takes 3 optional arguments. 
         
             table specifies a tag-table associated with the TextBuffer-instance.
@@ -526,6 +526,7 @@ class CodeBuffer(gtk.TextBuffer):
 
         # default styles    
         self.styles = DEFAULT_STYLES
+        self.styles["DEFAULT"]["font"] = font
                        
         # update styles with lang-spec:
         if lang:
