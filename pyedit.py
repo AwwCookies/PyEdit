@@ -5,14 +5,11 @@
 import pygtk, gtk, pango, urllib2, urllib
 import gtkcodebuffer, os, json, sys
 class PyEdit:
-    
+    #CONIG
     def get_config(self):
-        if os.path.exists("config"):
-            self.CONFIG = json.load(open("config"))
-        else:
-            self.CONFIG = {
-                "font": "Ubuntu Mono 12",
-            }
+        self.CONFIG = {
+            "font": "Ubuntu Mono 12",
+        }
     def __init__(self):
         self.get_config()
         self.VERSION = "0.0.2"
@@ -23,10 +20,7 @@ class PyEdit:
         self.FILEPATH = ""
         self.FILEEXT = ""
         self.syntex = None
-        try:
-            self.FONT = pango.FontDescription(self.CONFIG["font"])
-        except:
-            self.FONT = pango.FontDescription("Monospaced 12")
+        self.FONT = pango.FontDescription(self.CONFIG["font"])
         self.SEP = gtk.SeparatorMenuItem()
         self.clipboard = gtk.Clipboard()
         self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
@@ -69,6 +63,9 @@ class PyEdit:
 
         self.file_menu_exit = gtk.MenuItem("Exit")
         self.file_menu_exit.connect("activate", gtk.main_quit)
+        
+        self.file_menu_new = gtk.MenuItem("New")
+        self.file_menu_new.connect("activate", self.new)
 
         self.settings_menu_font = gtk.MenuItem("Font")
         self.settings_menu_font.connect("activate", self.font_dialog)
@@ -82,7 +79,10 @@ class PyEdit:
 
         self.upload_menu_cookiebin = gtk.MenuItem("CookieBin")
         self.upload_menu_cookiebin.connect("activate", self.cookiebin)
-
+        
+        # self.upload_menu_pastebin = gtk.MenuItem("Pastebin")
+        # self.upload_menu_pastebin.connect("activate", self.pastebin)
+        
         # Create all the syntax menu items
         self.syntax_menu_ada = gtk.MenuItem("ada")
         self.syntax_menu_c = gtk.MenuItem("c")
@@ -209,6 +209,7 @@ class PyEdit:
         self.syntaxmenu.append(self.syntax_menu_vhdl)
         self.syntaxmenu.append(self.syntax_menu_xml)
 
+        self.filemenu.append(self.file_menu_new)
         self.filemenu.append(self.file_menu_open)
         self.filemenu.append(self.file_menu_save)
         self.filemenu.append(self.file_menu_save_as)
@@ -222,6 +223,7 @@ class PyEdit:
         self.editmenu.append(self.edit_menu_paste)
 
         self.uploadmenu.append(self.upload_menu_cookiebin)
+        # self.uploadmenu.append(self.upload_menu_pastebin)
 
         self.helpmenu.append(self.help_menu_about)
 
@@ -256,7 +258,11 @@ class PyEdit:
 
         self.window.add(self.vbox)
         self.window.show_all()
-        
+    
+    def new(self, widget, data = None):   
+        self.textview.get_buffer().set_text("")
+        self.label.set_text("")
+    
     def about_dialog(self, widget, data = None):
         self.ad = gtk.AboutDialog()
         self.ad.set_name(self.PROGNAME)
@@ -301,7 +307,6 @@ class PyEdit:
             gtk.STOCK_OPEN, gtk.RESPONSE_OK))
 
         self.dialog.set_default_response(gtk.RESPONSE_OK)
-
         self.filter = gtk.FileFilter()
         self.filter.set_name("All files")
         self.filter.add_pattern("*.*")
