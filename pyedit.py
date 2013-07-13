@@ -20,7 +20,7 @@ class PyEdit:
         self.FILEPATH = ""
         self.FILEEXT = ""
         self.syntex = None
-        self.FONT = pango.FontDescription(self.CONFIG["font"])
+        self.FONT = self.PFONT = pango.FontDescription(self.CONFIG["font"])
         self.SEP = gtk.SeparatorMenuItem()
         self.clipboard = gtk.Clipboard()
         self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
@@ -298,9 +298,10 @@ class PyEdit:
         
     def font_dialog(self, widget, data = None):
         self.dialog = gtk.FontSelectionDialog("Pick a font")
+        self.dialog.set_font_name(self.FONT.to_string())
         self.dialog.run()
-        self.FONT = self.dialog.get_font_name()
-        self.textview.modify_font(pango.FontDescription(self.FONT))
+        self.FONT = pango.FontDescription(self.dialog.get_font_name())
+        self.textview.modify_font(self.FONT)
         self.change_syntax(None)
         self.dialog.destroy()
     
