@@ -3,9 +3,18 @@
 # Made by: Emma Jones (AwwCookies) #
 ####################################
 import pygtk, gtk, pango, urllib2, urllib
-import gtkcodebuffer
+import gtkcodebuffer, os, json, sys
 class PyEdit:
+    
+    def get_config(self):
+        if os.path.exists("config"):
+            self.CONFIG = json.load(open("config"))
+        else:
+            self.CONFIG = {
+                "font": "Ubuntu Mono 12",
+            }
     def __init__(self):
+        self.get_config()
         self.VERSION = "0.0.2"
         self.PROGNAME = "PyEdit"
         # syntax hilighting
@@ -14,7 +23,10 @@ class PyEdit:
         self.FILEPATH = ""
         self.FILEEXT = ""
         self.syntex = None
-        self.FONT = pango.FontDescription("Ubuntu Mono 12")
+        try:
+            self.FONT = pango.FontDescription(self.CONFIG["font"])
+        except:
+            self.FONT = pango.FontDescription("Monospaced 12")
         self.SEP = gtk.SeparatorMenuItem()
         self.clipboard = gtk.Clipboard()
         self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
@@ -315,7 +327,7 @@ class PyEdit:
         self.response = self.dialog.run()
         if self.response == gtk.RESPONSE_OK:
             self.FILEPATH = self.dialog.get_filename()
-            self.FILEEXT = self.dialog.get_filename().split("/")[-1].split(".")[1]
+            # self.FILEEXT = self.dialog.get_filename().split("/")[-1].split(".")[1]
             self.label.set_text(self.FILEPATH)
             with open(self.FILEPATH, "wb") as f:
                 f.write(self.textview.get_buffer().get_text(self.textview.get_buffer().get_start_iter(),
