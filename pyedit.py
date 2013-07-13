@@ -269,7 +269,10 @@ class PyEdit:
         self.ad.set_version(self.VERSION)
         self.ad.set_authors(["Emma Jones (AwwCookies)"])
         self.ad.set_website("http://github.com/AwwCookies/PyEdit")
-        self.ad.set_comments("Text Editor made with python and GTK")
+        self.ad.set_comments(
+            "Text Editor made with python and GTK\n\n"
+            "Syntex highlighting made possiable with Code Buffer\n"
+            "http://code.google.com/p/pygtkcodebuffer/")
         self.ad.set_default_response(gtk.RESPONSE_OK)
         self.response = self.ad.run()
         self.ad.destroy()
