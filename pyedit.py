@@ -78,8 +78,8 @@ class PyEdit:
         self.edit_menu_paste = gtk.MenuItem("Paste")
         self.edit_menu_paste.connect("activate", self.paste)
 
-        self.upload_menu_cookiebin = gtk.MenuItem("CookieBin")
-        self.upload_menu_cookiebin.connect("activate", self.cookiebin)
+        # self.upload_menu_cookiebin = gtk.MenuItem("CookieBin")
+        # self.upload_menu_cookiebin.connect("activate", self.cookiebin)
         
         # self.upload_menu_pastebin = gtk.MenuItem("Pastebin")
         # self.upload_menu_pastebin.connect("activate", self.pastebin)
@@ -223,7 +223,7 @@ class PyEdit:
         self.editmenu.append(self.edit_menu_copy)
         self.editmenu.append(self.edit_menu_paste)
 
-        self.uploadmenu.append(self.upload_menu_cookiebin)
+        # self.uploadmenu.append(self.upload_menu_cookiebin)
         # self.uploadmenu.append(self.upload_menu_pastebin)
 
         self.helpmenu.append(self.help_menu_about)
@@ -238,7 +238,7 @@ class PyEdit:
         self.menubar.append(self.file_menu)
         self.menubar.append(self.edit_menu)
         self.menubar.append(self.settings_menu)
-        self.menubar.append(self.upload_menu)
+        # self.menubar.append(self.upload_menu)
         self.menubar.append(self.syntax_menu)
         self.menubar.append(self.help_menu)
         
@@ -366,25 +366,6 @@ class PyEdit:
 
     def paste(self, widget, data = None):
         self.textview.get_buffer().paste_clipboard(self.clipboard, None, self.textview.get_editable())
-    
-    def cookiebin(self, widget, data = None):
-        self.text = self.textview.get_buffer().get_text(self.textview.get_buffer().get_start_iter(),
-                        self.textview.get_buffer().get_end_iter())
-        self.postdata = urllib.urlencode([('text', self.text), ('type', "None")])
-        self.path = 'http://gs.erryfanclub.com/cookiebin.py'
-        self.req = urllib2.Request(self.path, self.postdata)
-        self.req.add_header("Content-type", "application/x-www-form-urlencoded")
-        self.response = str(urllib2.urlopen(self.req).read().replace("\n", ''))
-        self.pop = gtk.Dialog()
-        self.pop.set_size_request(300, 100)
-        self.pop.set_title("CookieBin")
-        self.pop.add_buttons(gtk.STOCK_OK, 1)
-        self.entry = gtk.Entry()
-        self.entry.set_text("http://gs.erryfanclub.com/cookies/%s.html" % self.response)
-        self.entry.show()
-        self.pop.vbox.pack_start(self.entry)
-        if self.pop.run() == 1:
-            self.pop.destroy()
     
     def main(self):
         gtk.main()
