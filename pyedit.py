@@ -96,7 +96,7 @@ class PyEdit:
         self.syntax_menu_diff = gtk.MenuItem("diff")
         self.syntax_menu_fortran = gtk.MenuItem("fortran")
         self.syntax_menu_gtkrc = gtk.MenuItem("gtkrc")
-        self.syntax_menu_haskell = gtk.MenuItem("haskell")
+        # self.syntax_menu_haskell = gtk.MenuItem("haskell")
         self.syntax_menu_html = gtk.MenuItem("html")
         self.syntax_menu_idl = gtk.MenuItem("idl")
         self.syntax_menu_ini = gtk.MenuItem("ini")
@@ -138,7 +138,7 @@ class PyEdit:
         self.syntax_menu_diff.connect("activate", self.change_syntax)
         self.syntax_menu_fortran.connect("activate", self.change_syntax)
         self.syntax_menu_gtkrc.connect("activate", self.change_syntax)
-        self.syntax_menu_haskell.connect("activate", self.change_syntax)
+        # self.syntax_menu_haskell.connect("activate", self.change_syntax)
         self.syntax_menu_html.connect("activate", self.change_syntax)
         self.syntax_menu_idl.connect("activate", self.change_syntax)
         self.syntax_menu_ini.connect("activate", self.change_syntax)
@@ -180,7 +180,7 @@ class PyEdit:
         self.syntaxmenu.append(self.syntax_menu_diff)
         self.syntaxmenu.append(self.syntax_menu_fortran)
         self.syntaxmenu.append(self.syntax_menu_gtkrc)
-        self.syntaxmenu.append(self.syntax_menu_haskell)
+        # self.syntaxmenu.append(self.syntax_menu_haskell)
         self.syntaxmenu.append(self.syntax_menu_html)
         self.syntaxmenu.append(self.syntax_menu_idl)
         self.syntaxmenu.append(self.syntax_menu_ini)
@@ -298,6 +298,7 @@ class PyEdit:
             self.buff = gtkcodebuffer.CodeBuffer(lang=self.syntax, font=self.FONT)
             self.textview.set_buffer(self.buff)
             self.textview.get_buffer().set_text(self.old_buffer)
+        # self.label.set_text("Path: %s Syntax: %s" % (self.FILEPATH, widget.get_label()))
             
         
     def font_dialog(self, widget, data = None):
@@ -325,6 +326,7 @@ class PyEdit:
             self.text = []
             self.window.set_title("PyEdit: " + self.dialog.get_filename().split("/")[-1])
             self.label.set_text(self.dialog.get_filename())
+            self.FILEPATH = self.dialog.get_filename()
             with open(self.dialog.get_filename(), "rb") as f:
                 for self.line in f:
                     self.text.append(self.line)
