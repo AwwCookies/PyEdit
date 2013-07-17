@@ -8,7 +8,7 @@ class PyEdit:
     #CONIG
     def get_config(self):
         self.CONFIG = {
-            "font": "Ubuntu Mono 12",
+            "font": "Ubuntu Mono 12"
         }
         
     def __init__(self, File = None):
@@ -384,13 +384,3 @@ if __name__ == "__main__":
     else:
         PyEdit = PyEdit()
     PyEdit.main()
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
