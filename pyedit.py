@@ -56,7 +56,10 @@ class PyEdit:
 
         self.file_menu_open = gtk.MenuItem("Open")
         self.file_menu_open.connect("activate", self.open)
-
+        
+        self.file_menu_run = gtk.MenuItem("Save & Run")
+        self.file_menu_run.connect("activate", self.run)
+        
         self.file_menu_save_as = gtk.MenuItem("Save As")
         self.file_menu_save_as.connect("activate", self.save_as)
 
@@ -92,6 +95,7 @@ class PyEdit:
         self.syntax_menu_cpp = gtk.MenuItem("cpp")
         self.syntax_menu_csharp = gtk.MenuItem("csharp")
         self.syntax_menu_css = gtk.MenuItem("css")
+	""
         self.syntax_menu_desktop = gtk.MenuItem("desktop")
         self.syntax_menu_diff = gtk.MenuItem("diff")
         self.syntax_menu_fortran = gtk.MenuItem("fortran")
@@ -215,6 +219,7 @@ class PyEdit:
         self.filemenu.append(self.file_menu_open)
         self.filemenu.append(self.file_menu_save)
         self.filemenu.append(self.file_menu_save_as)
+        self.filemenu.append(self.file_menu_run)
         self.filemenu.append(self.SEP)
         self.filemenu.append(self.file_menu_exit)
 
@@ -255,7 +260,6 @@ class PyEdit:
         self.scrollwindow.add_with_viewport(self.textview)
         
         self.label = gtk.Label()
-        
         self.vbox.pack_start(self.menubar, False, False, 0)
         self.vbox.pack_start(self.scrollwindow)
         self.vbox.pack_start(self.label, False, False, 0)
@@ -280,7 +284,10 @@ class PyEdit:
         self.ad.set_default_response(gtk.RESPONSE_OK)
         self.response = self.ad.run()
         self.ad.destroy()
-        
+    
+    def update_label(self):
+        self.label.set_text("Path: %s | Syntax: %s | Font: %s" % (self.FILEPATH, self.lang, self.FONT))
+    
     def change_syntax(self, widget, data = None):
         # Save current buffer text
         self.old_buffer = self.textview.get_buffer().get_text(self.textview.get_buffer().get_start_iter(),
@@ -288,6 +295,7 @@ class PyEdit:
         if widget != None:
             if widget.get_label() != "none":
                 self.syntax = gtkcodebuffer.SyntaxLoader(widget.get_label())
+                self.lang = widget.get_label()
                 self.buff = gtkcodebuffer.CodeBuffer(lang=self.syntax, font=self.FONT)
             else:
                 self.buff = None
@@ -298,7 +306,7 @@ class PyEdit:
             self.buff = gtkcodebuffer.CodeBuffer(lang=self.syntax, font=self.FONT)
             self.textview.set_buffer(self.buff)
             self.textview.get_buffer().set_text(self.old_buffer)
-        # self.label.set_text("Path: %s Syntax: %s" % (self.FILEPATH, widget.get_label()))
+        self.update_label()
             
         
     def font_dialog(self, widget, data = None):
@@ -309,6 +317,12 @@ class PyEdit:
         self.textview.modify_font(self.FONT)
         self.change_syntax(None)
         self.dialog.destroy()
+    
+    def run(self, widget, data = None):
+        if self.lang == "python":
+            self.save(widget)
+            os.system("python " + self.FILEPATH)
+            
     
     def open(self, widget, data = None):
         self.dialog = gtk.FileChooserDialog(
@@ -332,6 +346,7 @@ class PyEdit:
                     self.text.append(self.line)
             self.textview.get_buffer().set_text(''.join(self.text))
         self.dialog.destroy()
+        self.update_label()
     
     def save_as(self, widget, data = None):
         self.dialog = gtk.FileChooserDialog(
