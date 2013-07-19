@@ -11,7 +11,7 @@
 <syntax>
 
 	
-
+<!---
 	<string style="string" escape="\"><starts>([uUrR]|[uU][rR]|[rR][uU])?"""</starts><ends>"""</ends></string>
 
 	<string style="string" escape="\"><starts>([uUrR]|[uU][rR]|[rR][uU])?'''</starts><ends>'''</ends></string>
@@ -19,6 +19,7 @@
 	<string style="string" escape="\"><starts>([uUrR]|[uU][rR]|[rR][uU])?"</starts><ends>"</ends></string>
 
 	<string style="string" escape="\"><starts>([uUrR]|[uU][rR]|[rR][uU])?'</starts><ends>'</ends></string>
+-->
 
 	<pattern style="comment">#.*$</pattern>
 

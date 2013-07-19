@@ -625,7 +625,7 @@ class CodeBuffer(gtk.TextBuffer):
             self.remove_all_tags(start, mend)
             # make start..mstart = DEFAUL (mstart == buffer-end if no match)
             if not start.equal(mstart):
-                _log_debug("Apply DEFAULT")
+                # _log_debug("Apply DEFAULT")
                 self.apply_tag_by_name("DEFAULT", start, mstart)                
         
             # nothing found -> finished
@@ -634,7 +634,7 @@ class CodeBuffer(gtk.TextBuffer):
                 continue
         
             # apply tag
-            _log_debug("Apply %s"%tagname)
+            # _log_debug("Apply %s"%tagname)
             self.apply_tag_by_name(tagname, mstart, mend)
 
             start = mend

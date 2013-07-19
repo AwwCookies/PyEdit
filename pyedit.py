@@ -23,6 +23,7 @@ class PyEdit:
         self.syntax = None
         self.FONT = pango.FontDescription(self.CONFIG["font"])
         self.SEP = gtk.SeparatorMenuItem()
+        self.SEP1 = gtk.SeparatorMenuItem()
         self.clipboard = gtk.Clipboard()
         self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
         self.window.set_title("PyEdit")
@@ -57,8 +58,11 @@ class PyEdit:
         self.file_menu_open = gtk.MenuItem("Open")
         self.file_menu_open.connect("activate", self.open)
         
-        self.file_menu_run = gtk.MenuItem("Save & Run")
+        self.file_menu_run = gtk.MenuItem("Run")
         self.file_menu_run.connect("activate", self.run)
+        
+        self.file_menu_build = gtk.MenuItem("Build")
+        self.file_menu_build.connect("activate", self.build)
         
         self.file_menu_save_as = gtk.MenuItem("Save As")
         self.file_menu_save_as.connect("activate", self.save_as)
@@ -219,7 +223,9 @@ class PyEdit:
         self.filemenu.append(self.file_menu_open)
         self.filemenu.append(self.file_menu_save)
         self.filemenu.append(self.file_menu_save_as)
+        self.filemenu.append(self.SEP1)
         self.filemenu.append(self.file_menu_run)
+        self.filemenu.append(self.file_menu_build)
         self.filemenu.append(self.SEP)
         self.filemenu.append(self.file_menu_exit)
 
@@ -250,7 +256,8 @@ class PyEdit:
         
         self.vbox = gtk.VBox(False, 2)   
         
-        self.textview = gtk.TextView()
+        # self.textview = gtk.TextView()
+        self.textview = gtksourceview2.SourceView()
         self.textview.set_buffer(self.buff)
         self.textview.modify_font(self.FONT)
         if File != None:
@@ -323,7 +330,10 @@ class PyEdit:
             self.save(widget)
             os.system("python " + self.FILEPATH)
             
-    
+    def build(self, widget, data = None):
+        if self.lang == "c":
+            os.system("gcc %s -o %s" % (self.FILEPATH, ' '.join(self.FILEPATH.split(".")[:-1])))
+        
     def open(self, widget, data = None):
         self.dialog = gtk.FileChooserDialog(
             "Open...", None, gtk.FILE_CHOOSER_ACTION_OPEN, (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
