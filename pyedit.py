@@ -263,6 +263,7 @@ class PyEdit:
             self.textview.get_buffer().set_text(open(File, 'rb').read())
         self.textview.set_wrap_mode(True)
         self.scrollwindow = gtk.ScrolledWindow()
+        self.scrollwindow.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
         self.scrollwindow.add_with_viewport(self.textview)
         
         self.label = gtk.Label()
@@ -401,8 +402,8 @@ class PyEdit:
 			self.save(widget)
         elif data.keyval == 65471: #f2
             self.open(widget)
-        else:
-            print data.keyval
+       # else:
+       #     print data.keyval
     
     def main(self):
         gtk.main()
