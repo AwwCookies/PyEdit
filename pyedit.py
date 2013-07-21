@@ -99,7 +99,6 @@ class PyEdit:
         self.syntax_menu_cpp = gtk.MenuItem("cpp")
         self.syntax_menu_csharp = gtk.MenuItem("csharp")
         self.syntax_menu_css = gtk.MenuItem("css")
-	""
         self.syntax_menu_desktop = gtk.MenuItem("desktop")
         self.syntax_menu_diff = gtk.MenuItem("diff")
         self.syntax_menu_fortran = gtk.MenuItem("fortran")
@@ -256,8 +255,8 @@ class PyEdit:
         
         self.vbox = gtk.VBox(False, 2)   
         
-        # self.textview = gtk.TextView()
-        self.textview = gtksourceview2.SourceView()
+        self.textview = gtk.TextView()
+        # self.textview = gtksourceview2.SourceView()
         self.textview.set_buffer(self.buff)
         self.textview.modify_font(self.FONT)
         if File != None:
@@ -398,7 +397,12 @@ class PyEdit:
         self.textview.get_buffer().paste_clipboard(self.clipboard, None, self.textview.get_editable())
     
     def key_pressed(self, widget, data = None):
-        pass
+        if data.keyval == 65472: #f3
+			self.save(widget)
+        elif data.keyval == 65471: #f2
+            self.open(widget)
+        else:
+            print data.keyval
     
     def main(self):
         gtk.main()
